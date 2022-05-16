@@ -47,10 +47,10 @@ inquirer.prompt(questions).then(answers => {
       titles.forEach((v, i) => {
         const title = v.textContent;
         const seeder = seeders[i].textContent;
-
         const size = sizes[i].childNodes[0].textContent;
+        const link = 'https://1337x.wtf' + v.getAttribute('href');
 
-        result.push({ title, seeder, size });
+        result.push([{ title, seeder, size, link }]);
       });
       return result;
     });
