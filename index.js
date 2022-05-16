@@ -29,3 +29,16 @@ inquirer.prompt(questions).then(answers => {
   const title = answers.title.toLowerCase().split(' ').join('%20');
   const url = `https://1337x.wtf/category-search/${title}/${answers.category}/1/`;
 
+  // puppeteer
+  async function start() {
+    const browser = await puppeteer.launch({
+      headless: false,
+    });
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    await browser.close();
+  }
+
+  start();
+});
