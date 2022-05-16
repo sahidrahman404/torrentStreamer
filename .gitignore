@@ -11,3 +11,6 @@ yarn-error.log*
 *.tsbuildinfo
 .npm
 .eslintcache
+/AhaShare.com.txt
+/*.mkv
+/Torrent downloaded from Demonoid.com - Copy.txt

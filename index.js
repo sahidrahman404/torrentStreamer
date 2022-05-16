@@ -5,6 +5,7 @@ import puppeteer from 'puppeteer';
 import WebTorrent from 'webtorrent-hybrid';
 const client = new WebTorrent();
 import fs from 'fs';
+import cliProgress from 'cli-progress';
 
 let destinationFolder = `/home/rahman/Videos/movies/`;
 
