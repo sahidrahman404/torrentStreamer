@@ -4,6 +4,9 @@ import inquirer from 'inquirer';
 import puppeteer from 'puppeteer';
 import WebTorrent from 'webtorrent-hybrid';
 const client = new WebTorrent();
+import fs from 'fs';
+
+let destinationFolder = `/home/rahman/Videos/movies/`;
 
 const questions = [
   /* Pass your questions in here */
@@ -78,13 +81,51 @@ inquirer.prompt(questions).then(answers => {
         });
         const page = await browser.newPage();
         await page.goto(torrentMagnet);
-        const magnetSelector =
-          '.lfecb4006b75614af2c6685e8cce0be1e2ff3b808.l2a4c6cdc6a08118ea01a78cefb9546e14997b78c > li:nth-child(1) > a';
+        console.log(torrentMagnet);
+
+        const magnetSelector = '.no-top-radius .clearfix ul li a';
+
+        await page.waitForSelector(magnetSelector);
 
         const magnetLink = await page.$eval(magnetSelector, v =>
           v.getAttribute('href')
         );
+
         console.log(magnetLink);
+
+        // cerate destination folder
+        destinationFolder += `${torrents[`${index}`][0].title
+          .split(' ')
+          .join('_')}/`;
+        console.log(destinationFolder);
+
+        if (!fs.existsSync(destinationFolder)) {
+          fs.mkdirSync(destinationFolder);
+        }
+
+        client.add(magnetLink, torrent => {
+          const files = torrent.files;
+          let length = files.length;
+          console.log('Numbers of files:- \t' + length);
+
+          files.forEach(file => {
+            const source = file.createReadStream();
+            const destination = fs.createWriteStream(
+              destinationFolder + file.name
+            );
+            source
+              .on('end', () => {
+                console.log('file: \t\t', file.name);
+                length -= 1;
+                if (!length) {
+                  process.exit();
+                }
+              })
+              .pipe(destination);
+          });
+
+          });
+        });
 
         await browser.close();
       }
