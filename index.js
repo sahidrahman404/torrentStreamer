@@ -123,8 +123,6 @@ inquirer.prompt(questions).then(answers => {
               })
               .pipe(destination);
           });
-
-          });
         });
 
         await browser.close();
