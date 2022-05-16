@@ -124,6 +124,15 @@ inquirer.prompt(questions).then(answers => {
               })
               .pipe(destination);
           });
+
+          // log progress
+
+          const bar = new cliProgress.SingleBar({}, cliProgress.Presets.legacy);
+          bar.start(100, 0); //full, start
+
+          torrent.on('download', function (bytes) {
+            bar.update(torrent.progress * 100);
+          });
         });
 
         await browser.close();
