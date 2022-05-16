@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "inquirer": "^8.2.4",
-    "puppeteer": "^14.1.0"
+    "puppeteer": "^14.1.0",
+    "webtorrent-hybrid": "^5.0.2"
   }
 }

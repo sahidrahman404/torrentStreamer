@@ -2,6 +2,8 @@
 
 import inquirer from 'inquirer';
 import puppeteer from 'puppeteer';
+import WebTorrent from 'webtorrent-hybrid';
+const client = new WebTorrent();
 
 const questions = [
   /* Pass your questions in here */
