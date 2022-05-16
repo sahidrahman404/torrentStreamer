@@ -55,7 +55,22 @@ inquirer.prompt(questions).then(answers => {
       return result;
     });
 
-    console.log(torrents);
+    const moviesString = torrents.map(v => {
+      return `${v[0].title} \t seeder: ${v[0].seeder} \t size: ${v[0].size}`;
+    });
+
+    const movies = {
+      type: 'list',
+      name: 'movie',
+      message: `Choose one of these torrent magnets *tip: choose the most seeded one`,
+      choices: moviesString,
+    };
+
+    inquirer.prompt(movies).then(answers => {
+      const index = moviesString.indexOf(answers.movie);
+      const torrentMagnet = torrents[`${index}`][0].link;
+      console.log(torrentMagnet);
+    });
 
     await browser.close();
   }
