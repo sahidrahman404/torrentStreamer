@@ -32,10 +32,30 @@ inquirer.prompt(questions).then(answers => {
   // puppeteer
   async function start() {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
     });
     const page = await browser.newPage();
     await page.goto(url);
+
+    const torrents = await page.evaluate(() => {
+      const titles = document.querySelectorAll('.coll-1.name > a:last-child');
+      const seeders = document.querySelectorAll('.seeds');
+      const sizes = document.querySelectorAll('.size');
+
+      const result = [];
+
+      titles.forEach((v, i) => {
+        const title = v.textContent;
+        const seeder = seeders[i].textContent;
+
+        const size = sizes[i].childNodes[0].textContent;
+
+        result.push({ title, seeder, size });
+      });
+      return result;
+    });
+
+    console.log(torrents);
 
     await browser.close();
   }
