@@ -1,6 +1,7 @@
 'use strict';
 
 import inquirer from 'inquirer';
+import puppeteer from 'puppeteer';
 
 const questions = [
   /* Pass your questions in here */

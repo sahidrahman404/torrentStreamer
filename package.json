@@ -11,6 +11,7 @@
   "type": "module",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "puppeteer": "^14.1.0"
   }
 }
