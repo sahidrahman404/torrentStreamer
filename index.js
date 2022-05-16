@@ -69,7 +69,25 @@ inquirer.prompt(questions).then(answers => {
     inquirer.prompt(movies).then(answers => {
       const index = moviesString.indexOf(answers.movie);
       const torrentMagnet = torrents[`${index}`][0].link;
-      console.log(torrentMagnet);
+
+      async function downloadMagnet() {
+        const browser = await puppeteer.launch({
+          headless: true,
+        });
+        const page = await browser.newPage();
+        await page.goto(torrentMagnet);
+        const magnetSelector =
+          '.lfecb4006b75614af2c6685e8cce0be1e2ff3b808.l2a4c6cdc6a08118ea01a78cefb9546e14997b78c > li:nth-child(1) > a';
+
+        const magnetLink = await page.$eval(magnetSelector, v =>
+          v.getAttribute('href')
+        );
+        console.log(magnetLink);
+
+        await browser.close();
+      }
+
+      downloadMagnet();
     });
 
     await browser.close();
