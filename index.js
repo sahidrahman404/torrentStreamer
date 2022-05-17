@@ -54,7 +54,7 @@ inquirer.prompt(questions).then(answers => {
         const title = v.textContent;
         const seeder = seeders[i].textContent;
         const size = sizes[i].childNodes[0].textContent;
-        const link = 'https://1337x.wtf' + v.getAttribute('href');
+        const link = v.href;
 
         result.push([{ title, seeder, size, link }]);
       });
@@ -88,9 +88,7 @@ inquirer.prompt(questions).then(answers => {
 
         await page.waitForSelector(magnetSelector);
 
-        const magnetLink = await page.$eval(magnetSelector, v =>
-          v.getAttribute('href')
-        );
+        const magnetLink = await page.$eval(magnetSelector, v => v.href);
 
         console.log(magnetLink);
 
